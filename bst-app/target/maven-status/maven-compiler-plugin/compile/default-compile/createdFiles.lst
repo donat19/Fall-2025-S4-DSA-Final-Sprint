@@ -1,0 +1,6 @@
+com/bstapp/BstApplication.class
+com/bstapp/service/BstNode.class
+com/bstapp/service/BstService.class
+com/bstapp/model/BstTree.class
+com/bstapp/repository/BstTreeRepository.class
+com/bstapp/controller/BstController.class

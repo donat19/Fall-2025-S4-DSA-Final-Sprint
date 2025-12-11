@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BST Builder - History</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0f0f23;
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #e0e0e0;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        
+        h1 {
+            color: #00d9ff;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: transparent;
+            color: #00d9ff;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 500;
+            margin-bottom: 24px;
+            border: 2px solid #2a2a4a;
+            transition: all 0.2s ease;
+        }
+        
+        .back-btn:hover {
+            border-color: #00d9ff;
+            background: rgba(0, 217, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .card {
+            background: #1a1a2e;
+            border: 1px solid #2a2a4a;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: all 0.2s ease;
+        }
+        
+        .card:hover {
+            border-color: #3a3a5a;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #2a2a4a;
+        }
+        
+        .card-header h3 {
+            color: #e0e0e0;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-header .date {
+            color: #555;
+            font-size: 13px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .numbers-input {
+            background: #0f0f23;
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #2a2a4a;
+        }
+        
+        .numbers-input .label {
+            color: #666;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+        
+        .numbers-input .value {
+            color: #00ff88;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 15px;
+        }
+        
+        .json-label {
+            color: #666;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        
+        .tree-json {
+            background: #0a0a1a;
+            color: #00d9ff;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 12px;
+            line-height: 1.6;
+            max-height: 280px;
+            overflow-y: auto;
+            border: 1px solid #1a1a2e;
+        }
+        
+        .tree-json::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        .tree-json::-webkit-scrollbar-track {
+            background: #0a0a1a;
+        }
+        
+        .tree-json::-webkit-scrollbar-thumb {
+            background: #2a2a4a;
+            border-radius: 4px;
+        }
+        
+        .no-trees {
+            background: #1a1a2e;
+            border: 1px solid #2a2a4a;
+            border-radius: 16px;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        
+        .no-trees .icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        
+        .no-trees p {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .no-trees a {
+            display: inline-block;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #00d9ff 0%, #00ff88 100%);
+            color: #0f0f23;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        
+        .no-trees a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 217, 255, 0.3);
+        }
+        
+        .tree-id {
+            background: linear-gradient(135deg, #00d9ff 0%, #00ff88 100%);
+            color: #0f0f23;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 24px;
+            padding: 16px 20px;
+            background: #1a1a2e;
+            border: 1px solid #2a2a4a;
+            border-radius: 12px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #00d9ff;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">📋</div>
+            <h1>Tree History</h1>
+            <p class="subtitle">Previously built Binary Search Trees</p>
+        </div>
+        
+        <a href="/enter-numbers" class="back-btn">← Back to Builder</a>
+        
+        <div th:if="${#lists.isEmpty(trees)}" class="no-trees">
+            <div class="icon">🌱</div>
+            <p>No trees have been built yet</p>
+            <a href="/enter-numbers">Build Your First Tree</a>
+        </div>
+        
+        <div th:unless="${#lists.isEmpty(trees)}" class="stats">
+            <div class="stat">
+                <div class="stat-value" th:text="${#lists.size(trees)}">0</div>
+                <div class="stat-label">Total Trees</div>
+            </div>
+        </div>
+        
+        <div th:each="tree, iterStat : ${trees}" class="card">
+            <div class="card-header">
+                <h3>
+                    <span class="tree-id" th:text="'#' + ${tree.id}"></span>
+                    Binary Search Tree
+                </h3>
+                <span class="date" th:text="${#temporals.format(tree.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
+            </div>
+            
+            <div class="numbers-input">
+                <div class="label">Input Numbers</div>
+                <div class="value" th:text="${tree.inputNumbers}"></div>
+            </div>
+            
+            <div class="json-label">Tree Structure (JSON)</div>
+            <pre class="tree-json" th:text="${tree.treeJson}"></pre>
+        </div>
+    </div>
+</body>
+</html>

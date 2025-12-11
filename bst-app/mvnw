@@ -1,0 +1,16 @@
+#!/bin/sh
+# Maven Wrapper script
+
+set -e
+
+MAVEN_WRAPPER_JAR=".mvn/wrapper/maven-wrapper.jar"
+MAVEN_WRAPPER_PROPERTIES=".mvn/wrapper/maven-wrapper.properties"
+
+# Download maven-wrapper.jar if not present
+if [ ! -f "$MAVEN_WRAPPER_JAR" ]; then
+    mkdir -p .mvn/wrapper
+    curl -o "$MAVEN_WRAPPER_JAR" "https://repo.maven.apache.org/maven2/org/apache/maven/wrapper/maven-wrapper/3.2.0/maven-wrapper-3.2.0.jar"
+fi
+
+# Execute maven wrapper
+exec java -jar "$MAVEN_WRAPPER_JAR" "$@"

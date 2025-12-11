@@ -234,6 +234,66 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
+
+        .view-toggle {
+            display: flex;
+            gap: 8px;
+            margin: 12px 0 16px;
+        }
+
+        .toggle-btn {
+            padding: 10px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 2px solid #2a2a4a;
+            border-radius: 8px;
+            cursor: pointer;
+            background: transparent;
+            color: #666;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-btn:hover {
+            border-color: #00d9ff;
+            color: #00d9ff;
+        }
+
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #00d9ff 0%, #00ff88 100%);
+            color: #0f0f23;
+            border-color: transparent;
+        }
+
+        .tree-visual {
+            display: none;
+            background: #0a0a1a;
+            border-radius: 12px;
+            border: 1px solid #1a1a2e;
+            padding: 18px;
+            min-height: 260px;
+            overflow: auto;
+        }
+
+        .tree-visual.show {
+            display: block;
+        }
+
+        .tree-canvas {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tree-canvas canvas {
+            width: 100%;
+            max-width: 100%;
+            background: #0f0f23;
+            border: 1px solid #1a1a2e;
+            border-radius: 10px;
+        }
+
+        .json-container { display: none; }
     </style>
 </head>
 <body>
@@ -259,7 +319,7 @@
             </div>
         </div>
         
-        <div th:each="tree, iterStat : ${trees}" class="card">
+        <div th:each="tree, iterStat : ${trees}" class="card tree-card" th:attr="data-tree-id=${tree.id}">
             <div class="card-header">
                 <h3>
                     <span class="tree-id" th:text="'#' + ${tree.id}"></span>
@@ -272,10 +332,158 @@
                 <div class="label">Input Numbers</div>
                 <div class="value" th:text="${tree.inputNumbers}"></div>
             </div>
-            
-            <div class="json-label">Tree Structure (JSON)</div>
-            <pre class="tree-json" th:text="${tree.treeJson}"></pre>
+
+            <div class="view-toggle">
+                <button class="toggle-btn active btn-visual" type="button">🌲 Visual</button>
+                <button class="toggle-btn btn-json" type="button">{ } JSON</button>
+            </div>
+
+            <div class="tree-visual show">
+                <div class="tree-canvas">
+                    <canvas th:attr="id='treeCanvas-' + ${tree.id}"></canvas>
+                </div>
+            </div>
+
+            <div class="json-container">
+                <div class="json-label">Tree Structure (JSON)</div>
+                <pre class="tree-json" th:attr="id='treeJson-' + ${tree.id}" th:text="${tree.treeJson}"></pre>
+            </div>
         </div>
     </div>
+
+    <script>
+        function layoutTree(root) {
+            const nodes = [];
+            const edges = [];
+            let idCounter = 0;
+            let orderCounter = 0;
+            let maxDepth = 0;
+
+            function dfs(node, depth) {
+                if (!node) return null;
+                const leftId = dfs(node.left, depth + 1);
+                const nodeId = idCounter++;
+                nodes.push({ id: nodeId, value: node.value, depth, order: orderCounter++ });
+                maxDepth = Math.max(maxDepth, depth);
+                const rightId = dfs(node.right, depth + 1);
+                if (leftId !== null) edges.push({ from: nodeId, to: leftId });
+                if (rightId !== null) edges.push({ from: nodeId, to: rightId });
+                return nodeId;
+            }
+
+            dfs(root, 0);
+            return { nodes, edges, depth: maxDepth, width: Math.max(1, orderCounter) };
+        }
+
+        function drawTreeCanvas(canvas, root) {
+            if (!canvas || !root) return;
+            const ctx = canvas.getContext('2d');
+            const layout = layoutTree(root);
+            const padding = 32;
+            const xGap = 80;
+            const yGap = 88;
+            const radius = 16;
+
+            const canvasWidth = Math.max(360, padding * 2 + (layout.width - 1) * xGap + radius * 2);
+            const canvasHeight = padding * 2 + layout.depth * yGap + radius * 2;
+            canvas.width = canvasWidth;
+            canvas.height = canvasHeight;
+
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+            const nodeMap = new Map();
+            layout.nodes.forEach(n => nodeMap.set(n.id, n));
+
+            const getPos = (n) => ({
+                x: padding + n.order * xGap,
+                y: padding + n.depth * yGap
+            });
+
+            ctx.strokeStyle = '#00d9ff';
+            ctx.lineWidth = 2;
+            ctx.globalAlpha = 0.8;
+            layout.edges.forEach(edge => {
+                const parent = nodeMap.get(edge.from);
+                const child = nodeMap.get(edge.to);
+                if (!parent || !child) return;
+                const p = getPos(parent);
+                const c = getPos(child);
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(c.x, c.y);
+                ctx.stroke();
+            });
+            ctx.globalAlpha = 1;
+
+            layout.nodes.forEach(node => {
+                const { x, y } = getPos(node);
+                const gradient = ctx.createRadialGradient(x - 4, y - 4, 4, x, y, radius + 2);
+                gradient.addColorStop(0, '#00ff88');
+                gradient.addColorStop(1, '#00d9ff');
+
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.strokeStyle = 'rgba(0, 0, 0, 0.35)';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                ctx.fillStyle = '#0f0f23';
+                ctx.font = 'bold 15px Inter, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(node.value, x, y);
+            });
+        }
+
+        function toggleView(showVisual, card) {
+            const visual = card.querySelector('.tree-visual');
+            const json = card.querySelector('.json-container');
+            const btnVisual = card.querySelector('.btn-visual');
+            const btnJson = card.querySelector('.btn-json');
+
+            if (showVisual) {
+                visual.classList.add('show');
+                json.style.display = 'none';
+                btnVisual.classList.add('active');
+                btnJson.classList.remove('active');
+            } else {
+                visual.classList.remove('show');
+                json.style.display = 'block';
+                btnVisual.classList.remove('active');
+                btnJson.classList.add('active');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.tree-card');
+
+            cards.forEach(card => {
+                const jsonPre = card.querySelector('.tree-json');
+                const canvas = card.querySelector('canvas');
+                let treeData = null;
+
+                try {
+                    treeData = JSON.parse(jsonPre.textContent);
+                    drawTreeCanvas(canvas, treeData);
+                } catch (err) {
+                    toggleView(false, card);
+                    jsonPre.textContent = 'Invalid tree data';
+                }
+
+                const btnVisual = card.querySelector('.btn-visual');
+                const btnJson = card.querySelector('.btn-json');
+
+                btnVisual.addEventListener('click', () => {
+                    toggleView(true, card);
+                    if (treeData) drawTreeCanvas(canvas, treeData);
+                });
+
+                btnJson.addEventListener('click', () => toggleView(false, card));
+            });
+        });
+    </script>
 </body>
 </html>

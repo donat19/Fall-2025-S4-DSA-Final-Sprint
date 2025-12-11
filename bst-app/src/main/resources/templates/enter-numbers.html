@@ -6,12 +6,7 @@
     <title>BST Builder - Enter Numbers</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: #0f0f23;
@@ -19,35 +14,11 @@
             padding: 40px 20px;
             color: #e0e0e0;
         }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .logo {
-            font-size: 48px;
-            margin-bottom: 10px;
-        }
-        
-        h1 {
-            color: #00d9ff;
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-        
-        .subtitle {
-            color: #666;
-            margin-top: 8px;
-            font-size: 14px;
-        }
-        
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 40px; }
+        .logo { font-size: 48px; margin-bottom: 10px; }
+        h1 { color: #00d9ff; font-size: 32px; font-weight: 700; letter-spacing: -0.5px; }
+        .subtitle { color: #666; margin-top: 8px; font-size: 14px; }
         .card {
             background: #1a1a2e;
             border: 1px solid #2a2a4a;
@@ -55,11 +26,7 @@
             padding: 32px;
             margin-bottom: 24px;
         }
-        
-        .input-group {
-            margin-bottom: 24px;
-        }
-        
+        .input-group { margin-bottom: 24px; }
         label {
             display: block;
             margin-bottom: 10px;
@@ -69,7 +36,6 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
         input[type="text"] {
             width: 100%;
             padding: 16px 20px;
@@ -81,29 +47,14 @@
             color: #00ff88;
             transition: all 0.3s ease;
         }
-        
-        input[type="text"]::placeholder {
-            color: #444;
-        }
-        
+        input[type="text"]::placeholder { color: #444; }
         input[type="text"]:focus {
             outline: none;
             border-color: #00d9ff;
             box-shadow: 0 0 20px rgba(0, 217, 255, 0.15);
         }
-        
-        .hint {
-            color: #555;
-            font-size: 13px;
-            margin-top: 8px;
-        }
-        
-        .buttons {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        
+        .hint { color: #555; font-size: 13px; margin-top: 8px; }
+        .buttons { display: flex; gap: 12px; flex-wrap: wrap; }
         button {
             padding: 14px 28px;
             font-size: 15px;
@@ -114,67 +65,24 @@
             transition: all 0.2s ease;
             font-family: 'Inter', sans-serif;
         }
-        
-        button:hover {
-            transform: translateY(-2px);
-        }
-        
-        button:active {
-            transform: translateY(0);
-        }
-        
+        button:hover { transform: translateY(-2px); }
+        button:active { transform: translateY(0); }
         .btn-primary {
             background: linear-gradient(135deg, #00d9ff 0%, #00ff88 100%);
             color: #0f0f23;
         }
-        
-        .btn-primary:hover {
-            box-shadow: 0 8px 30px rgba(0, 217, 255, 0.3);
-        }
-        
+        .btn-primary:hover { box-shadow: 0 8px 30px rgba(0, 217, 255, 0.3); }
         .btn-secondary {
             background: transparent;
             color: #00d9ff;
             border: 2px solid #2a2a4a;
         }
-        
-        .btn-secondary:hover {
-            border-color: #00d9ff;
-            background: rgba(0, 217, 255, 0.1);
-        }
-        
-        .result {
-            margin-top: 24px;
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        .result.show {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .result h3 {
-            color: #00ff88;
-            margin-bottom: 16px;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .result-label {
-            color: #666;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-        
+        .btn-secondary:hover { border-color: #00d9ff; background: rgba(0, 217, 255, 0.1); }
+        .result { margin-top: 24px; display: none; animation: fadeIn 0.3s ease; }
+        .result.show { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px);} to { opacity: 1; transform: translateY(0);} }
+        .result h3 { color: #00ff88; margin-bottom: 16px; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+        .result-label { color: #666; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
         pre {
             background: #0a0a1a;
             color: #00ff88;
@@ -186,7 +94,6 @@
             line-height: 1.6;
             border: 1px solid #1a1a2e;
         }
-        
         .error {
             background: rgba(255, 71, 87, 0.1);
             color: #ff4757;
@@ -196,62 +103,59 @@
             display: none;
             border: 1px solid rgba(255, 71, 87, 0.3);
         }
-        
-        .error.show {
-            display: block;
-            animation: shake 0.4s ease;
-        }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-        
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 30px;
-        }
-        
-        .loading.show {
-            display: block;
-        }
-        
+        .error.show { display: block; animation: shake 0.4s ease; }
+        @keyframes shake { 0%,100% { transform: translateX(0);} 25% { transform: translateX(-5px);} 75% { transform: translateX(5px);} }
+        .loading { display: none; text-align: center; padding: 30px; }
+        .loading.show { display: block; }
         .spinner {
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             border: 3px solid #1a1a2e;
             border-top: 3px solid #00d9ff;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin: 0 auto 12px;
         }
-        
-        .loading p {
-            color: #666;
-            font-size: 14px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            color: #333;
+        .loading p { color: #666; font-size: 14px; }
+        @keyframes spin { 0% { transform: rotate(0deg);} 100% { transform: rotate(360deg);} }
+        .footer { text-align: center; margin-top: 40px; color: #333; font-size: 13px; }
+        .footer a { color: #00d9ff; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+        .view-toggle { display: flex; gap: 8px; margin-bottom: 16px; }
+        .toggle-btn {
+            padding: 10px 20px;
             font-size: 13px;
+            font-weight: 600;
+            border: 2px solid #2a2a4a;
+            border-radius: 8px;
+            cursor: pointer;
+            background: transparent;
+            color: #666;
+            transition: all 0.2s ease;
         }
-        
-        .footer a {
-            color: #00d9ff;
-            text-decoration: none;
+        .toggle-btn:hover { border-color: #00d9ff; color: #00d9ff; }
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #00d9ff 0%, #00ff88 100%);
+            color: #0f0f23;
+            border-color: transparent;
         }
-        
-        .footer a:hover {
-            text-decoration: underline;
+        .toggle-btn:hover { transform: none; }
+        .tree-visual {
+            display: none;
+            background: #0a0a1a;
+            border-radius: 12px;
+            border: 1px solid #1a1a2e;
+            padding: 24px;
+            min-height: 300px;
+            overflow: auto;
+        }
+        .tree-visual.show { display: block; }
+        .tree-canvas { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+        .tree-canvas canvas {
+            width: 100%;
+            max-width: 100%;
+            background: #0f0f23;
+            border: 1px solid #1a1a2e;
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -262,76 +166,194 @@
             <h1>Binary Search Tree Builder</h1>
             <p class="subtitle">Enter numbers to visualize BST structure</p>
         </div>
-        
+
         <div class="card">
             <div class="input-group">
                 <label for="numbers">Input Numbers</label>
                 <input type="text" id="numbers" placeholder="7, 3, 9, 1, 4, 8, 10">
                 <p class="hint">Separate numbers with commas or spaces. They will be inserted in order.</p>
             </div>
-            
+
             <div class="buttons">
-                <button class="btn-primary" onclick="submitNumbers()">
-                    ⚡ Build Tree
-                </button>
-                <button class="btn-secondary" onclick="window.location.href='/previous-trees'">
-                    📋 View History
-                </button>
+                <button class="btn-primary" onclick="submitNumbers()">⚡ Build Tree</button>
+                <button class="btn-secondary" onclick="window.location.href='/previous-trees'">📋 View History</button>
             </div>
-            
+
             <div class="loading" id="loading">
                 <div class="spinner"></div>
                 <p>Building tree...</p>
             </div>
-            
+
             <div class="error" id="error"></div>
-            
+
             <div class="result" id="result">
                 <h3>✓ Tree Built Successfully</h3>
-                <p class="result-label">JSON Structure</p>
-                <pre id="treeJson"></pre>
+
+                <div class="view-toggle">
+                    <button class="toggle-btn active" id="btnVisual" onclick="showVisual()">🌲 Visual</button>
+                    <button class="toggle-btn" id="btnJson" onclick="showJson()">{ } JSON</button>
+                </div>
+
+                <div class="tree-visual show" id="treeVisual">
+                    <div class="tree-canvas">
+                        <canvas id="treeCanvas"></canvas>
+                    </div>
+                </div>
+
+                <div id="jsonContainer" style="display: none;">
+                    <pre id="treeJson"></pre>
+                </div>
             </div>
         </div>
-        
+
         <div class="footer">
             <a href="/h2-console" target="_blank">H2 Database Console</a>
         </div>
     </div>
-    
+
     <script>
+        let currentTreeData = null;
+
+        function showVisual() {
+            document.getElementById('treeVisual').classList.add('show');
+            document.getElementById('jsonContainer').style.display = 'none';
+            document.getElementById('btnVisual').classList.add('active');
+            document.getElementById('btnJson').classList.remove('active');
+        }
+
+        function showJson() {
+            document.getElementById('treeVisual').classList.remove('show');
+            document.getElementById('jsonContainer').style.display = 'block';
+            document.getElementById('btnVisual').classList.remove('active');
+            document.getElementById('btnJson').classList.add('active');
+        }
+
+        function layoutTree(root) {
+            const nodes = [];
+            const edges = [];
+            let idCounter = 0;
+            let orderCounter = 0;
+            let maxDepth = 0;
+
+            function dfs(node, depth) {
+                if (!node) return null;
+                const leftId = dfs(node.left, depth + 1);
+                const nodeId = idCounter++;
+                nodes.push({ id: nodeId, value: node.value, depth, order: orderCounter++ });
+                maxDepth = Math.max(maxDepth, depth);
+                const rightId = dfs(node.right, depth + 1);
+                if (leftId !== null) edges.push({ from: nodeId, to: leftId });
+                if (rightId !== null) edges.push({ from: nodeId, to: rightId });
+                return nodeId;
+            }
+
+            dfs(root, 0);
+            return { nodes, edges, depth: maxDepth, width: Math.max(1, orderCounter) };
+        }
+
+        function drawTreeCanvas(root) {
+            const canvas = document.getElementById('treeCanvas');
+            if (!root || !canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            const layout = layoutTree(root);
+            const padding = 40;
+            const xGap = 80;
+            const yGap = 90;
+            const radius = 18;
+
+            const canvasWidth = Math.max(400, padding * 2 + (layout.width - 1) * xGap + radius * 2);
+            const canvasHeight = padding * 2 + layout.depth * yGap + radius * 2;
+            canvas.width = canvasWidth;
+            canvas.height = canvasHeight;
+
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+            const nodeMap = new Map();
+            layout.nodes.forEach(n => nodeMap.set(n.id, n));
+
+            const getPos = (n) => ({
+                x: padding + n.order * xGap,
+                y: padding + n.depth * yGap
+            });
+
+            ctx.strokeStyle = '#00d9ff';
+            ctx.lineWidth = 2;
+            ctx.globalAlpha = 0.8;
+            layout.edges.forEach(edge => {
+                const parent = nodeMap.get(edge.from);
+                const child = nodeMap.get(edge.to);
+                if (!parent || !child) return;
+                const p = getPos(parent);
+                const c = getPos(child);
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(c.x, c.y);
+                ctx.stroke();
+            });
+            ctx.globalAlpha = 1;
+
+            layout.nodes.forEach(node => {
+                const { x, y } = getPos(node);
+                const gradient = ctx.createRadialGradient(x - 5, y - 5, 4, x, y, radius + 2);
+                gradient.addColorStop(0, '#00ff88');
+                gradient.addColorStop(1, '#00d9ff');
+
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.strokeStyle = 'rgba(0, 0, 0, 0.35)';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                ctx.fillStyle = '#0f0f23';
+                ctx.font = 'bold 16px Inter, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(node.value, x, y);
+            });
+        }
+
         async function submitNumbers() {
             const numbersInput = document.getElementById('numbers').value.trim();
             const resultDiv = document.getElementById('result');
             const errorDiv = document.getElementById('error');
             const loadingDiv = document.getElementById('loading');
             const treeJsonPre = document.getElementById('treeJson');
-            
-            // Reset display
+
             resultDiv.classList.remove('show');
             errorDiv.classList.remove('show');
-            
+
             if (!numbersInput) {
                 errorDiv.textContent = 'Please enter some numbers!';
                 errorDiv.classList.add('show');
                 return;
             }
-            
-            // Show loading
+
             loadingDiv.classList.add('show');
-            
+
             try {
                 const response = await fetch('/process-numbers', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ numbers: numbersInput })
                 });
-                
+
                 const data = await response.text();
-                
+
                 if (response.ok) {
                     treeJsonPre.textContent = data;
+                    try {
+                        currentTreeData = JSON.parse(data);
+                        drawTreeCanvas(currentTreeData);
+                    } catch (e) {
+                        errorDiv.textContent = 'Could not visualize tree';
+                        errorDiv.classList.add('show');
+                    }
+
+                    showVisual();
                     resultDiv.classList.add('show');
                 } else {
                     const errorData = JSON.parse(data);
@@ -345,12 +367,9 @@
                 loadingDiv.classList.remove('show');
             }
         }
-        
-        // Allow Enter key to submit
+
         document.getElementById('numbers').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                submitNumbers();
-            }
+            if (e.key === 'Enter') submitNumbers();
         });
     </script>
 </body>
